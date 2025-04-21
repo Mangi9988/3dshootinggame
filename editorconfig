@@ -1,0 +1,30 @@
+# 최상위 에디터 설정 파일을 나타냅니다. 이 파일이 있는 디렉토리를 설정의 최상위 경계로 설정하고 상위 디렉토리의 설정을 무시합니다.
+root = true
+
+# 모든 파일에 적용되는 기본 설정입니다.
+[*]
+indent_style = space             # 들여쓰기에 공백 사용
+indent_size = 4                  # 들여쓰기 크기를 공백 4개로 설정
+charset = utf-8                  # 파일 인코딩을 UTF-8로 설정
+trim_trailing_whitespace = true  # 줄 끝의 공백을 자동으로 제거
+insert_final_newline = true      # 파일의 끝에 새로운 라인 추가
+
+# C# 파일에 대한 특정 설정입니다.
+[*.cs]
+dotnet_sort_system_directives_first = true  # System 디렉티브를 먼저 정렬
+csharp_style_unused_value_assignment_preference = unused_local_variable:suggestion  # 사용하지 않는 로컬 변수에 값 할당 시 제안 경고
+dotnet_style_prefer_auto_properties = true:silent  # 자동 속성 사용을 선호하되, 위반 시 경고하지 않음
+csharp_style_var_for_built_in_types = false  # 내장 타입에는 명시적 타입 사용
+csharp_style_var_when_type_is_apparent = false  # 타입이 명확할 때는 명시적 타입 사용
+csharp_style_var_elsewhere = false  # 그 외의 경우에도 명시적 타입 사용
+csharp_new_line_before_open_brace = all  # 모든 열린 괄호 전에 새로운 줄 사용
+csharp_new_line_before_else = true  # else 키워드 전에 새로운 줄 사용
+csharp_new_line_before_catch = true  # catch 키워드 전에 새로운 줄 사용
+csharp_new_line_before_finally = true  # finally 키워드 전에 새로운 줄 사용
+csharp_new_line_before_members_in_object_initializers = true  # 객체 초기화자 내 멤버 전에 새로운 줄 사용
+csharp_new_line_before_members_in_anonymous_types = true  # 익명 타입 내 멤버 전에 새로운 줄 사용
+csharp_new_line_between_query_expression_clauses = true  # 쿼리 표현식 절 사이에 새로운 줄 사용
+
+# XML 파일 설정입니다.
+[*.xml]
+indent_size = 2  # 들여쓰기 크기를 공백 2개로 설정
