@@ -984,9 +984,18 @@ MonoBehaviour:
   BasicMoveSpeed: 7
   SprintSpeedBonus: 12
   JumpPower: 5
+  _bonusJumpCount: 1
+  _isJumping: 0
+  _yVelocity: 0
+  _currentJumpCount: 0
   MaxStamina: 100
   StaminaUseRate: 20
   StaminaRechargeRate: 30
+  _currentStamina: 0
+  _isSprinting: 0
+  _rollSpeed: 15
+  _rollDuration: 0.5
+  _rollStaminaCost: 30
 --- !u!143 &1274883947
 CharacterController:
   m_ObjectHideFlags: 0
