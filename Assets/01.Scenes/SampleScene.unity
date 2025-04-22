@@ -187,7 +187,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 183
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -474,7 +474,7 @@ Canvas:
   m_GameObject: {fileID: 557495377}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 330585545}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -981,21 +981,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbc32698b111d140a9ed9d5972ab32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BasicMoveSpeed: 7
-  SprintSpeedBonus: 12
-  JumpPower: 5
-  _bonusJumpCount: 1
-  _isJumping: 0
-  _yVelocity: 0
-  _currentJumpCount: 0
-  MaxStamina: 100
-  StaminaUseRate: 20
-  StaminaRechargeRate: 30
-  _currentStamina: 0
-  _isSprinting: 0
-  _rollSpeed: 15
-  _rollDuration: 0.5
-  _rollStaminaCost: 30
+  _statData: {fileID: 11400000, guid: e51c2afd06bf08b488b98fc35237f5f3, type: 2}
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!143 &1274883947
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1109,7 +1098,7 @@ GameObject:
   - component: {fileID: 1613003068}
   - component: {fileID: 1613003067}
   - component: {fileID: 1613003066}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,8 +1188,8 @@ Transform:
   m_GameObject: {fileID: 1613003065}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalPosition: {x: 0, y: 10, z: 20}
+  m_LocalScale: {x: 5, y: 20, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
