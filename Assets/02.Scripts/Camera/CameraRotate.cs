@@ -29,5 +29,19 @@ public class CameraRotate : MonoBehaviour
         
         // 3. 회전 방향으로 회전시킨다.
         transform.eulerAngles = new Vector3(_rotationY, _rotationX, 0f);
+        
+        HandleMouseSensitivity();
+    }
+    
+    private void HandleMouseSensitivity()
+    {
+        if (Input.GetKeyDown(KeyCode.Period))
+        {
+            RotationSpeed += 10f;
+        }
+        if (Input.GetKeyDown(KeyCode.Comma))
+        {
+            RotationSpeed = Mathf.Max(10f, RotationSpeed - 10f); // 감도 0 이하 방지
+        }
     }
 }

@@ -14,5 +14,19 @@ public class PlayerRotate : MonoBehaviour
         _rotationX += mouseX * RotationSpeed * Time.deltaTime;
    
         transform.eulerAngles = new Vector3(0f, _rotationX, 0f);
+        
+        HandleMouseSensitivity();
+    }
+
+    private void HandleMouseSensitivity()
+    {
+        if (Input.GetKeyDown(KeyCode.Period))
+        {
+            RotationSpeed += 10f;
+        }
+        if (Input.GetKeyDown(KeyCode.Comma))
+        {
+            RotationSpeed = Mathf.Max(10f, RotationSpeed - 10f); // 감도 0 이하 방지
+        }
     }
 }

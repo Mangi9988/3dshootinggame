@@ -27,6 +27,7 @@ public class PlayerFire : MonoBehaviour
     [SerializeField] private int _currentBulletCount;
     [SerializeField] private TextMeshProUGUI _bulletText;
     private float _cooldownRemaining = 0f;
+    [SerializeField] private float bulletKnockbackForce = 5f;
     
     [Header("재장전")]
     [SerializeField] private float ReloadTime = 2f;
@@ -34,6 +35,7 @@ public class PlayerFire : MonoBehaviour
     private bool _isReloading = false;
     [SerializeField] private Image _reloadGaugeBar;
     
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -163,6 +165,20 @@ public class PlayerFire : MonoBehaviour
                 Transform transform = bulletParticle.transform;
                 transform.position = hitInfo.point;
                 transform.rotation = Quaternion.LookRotation(hitInfo.normal);
+
+
+                if (hitInfo.collider.gameObject.CompareTag("Enemy"))
+                {
+                    Enemy enemy = hitInfo.collider.GetComponent<Enemy>();
+                    Damage damage = new Damage
+                    {
+                        Value = 10,
+                        From = this.gameObject,
+                        KnockbackForce = bulletKnockbackForce
+                    };
+                    
+                    enemy.TakeDamage(damage);
+                }
             }
         }
     }
