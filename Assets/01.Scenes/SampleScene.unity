@@ -1150,7 +1150,7 @@ MonoBehaviour:
   AttackCooltime: 1.5
   MoveSpeed: 3.3
   Health: 100
-  DamagedTime: 0.5
+  DamagedTime: 0.1
   DieTime: 2
   IdleTime: 5
   PatrolPoints:
