@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 127773cae7799044f9b42ab9c530b32b
+timeCreated: 1492583503
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_Black/MetBarrel_Black_clsd_reg.prefab
+  uploadId: 175876

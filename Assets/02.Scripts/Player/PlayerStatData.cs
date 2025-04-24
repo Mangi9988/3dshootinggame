@@ -10,7 +10,8 @@ public class PlayerStatData : ScriptableObject
     public float JumpPower = 5f;
     public int BonusJumpCount = 1;
 
-    [Header("스태미나")]
+    [Header("스태미나 및 체력")]
+    public int Health = 100;
     public float MaxStamina = 100f;
     public float StaminaUseRate = 20f;
     public float StaminaRechargeRate = 10f;
@@ -20,7 +21,7 @@ public class PlayerStatData : ScriptableObject
     public float RollDuration = 0.5f;
     public float RollStaminaUseRate = 30f;
 
-    [FormerlySerializedAs("wallCheckDistance")] [Header("벽타기")]
+    [Header("벽타기")]
     public float WallCheckDistance = 1f;
     public float WallClimbSpeed = 5f;
     public float WallClimbStaminaCost = 30f;

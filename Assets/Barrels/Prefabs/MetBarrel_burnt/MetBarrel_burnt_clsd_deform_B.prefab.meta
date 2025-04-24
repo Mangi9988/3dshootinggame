@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e5b8454a1d880ad42b0eab637f58ba4c
+timeCreated: 1492593815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_burnt/MetBarrel_burnt_clsd_deform_B.prefab
+  uploadId: 175876

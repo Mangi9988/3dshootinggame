@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8315568cb0a11d14ea3fba8d0bc8f0f8
+timeCreated: 1492593815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_burnt/MetBarrel_burnt_opnd_creased.prefab
+  uploadId: 175876

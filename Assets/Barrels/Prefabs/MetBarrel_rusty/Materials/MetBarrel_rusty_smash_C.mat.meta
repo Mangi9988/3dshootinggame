@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c1e1d0acd31bc29478d0b8e9bcdedd05
+timeCreated: 1490679581
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_rusty/Materials/MetBarrel_rusty_smash_C.mat
+  uploadId: 175876

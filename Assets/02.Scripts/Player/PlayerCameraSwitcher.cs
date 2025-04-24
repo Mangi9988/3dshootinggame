@@ -12,6 +12,5 @@ public class PlayerCameraSwitcher : MonoBehaviour
         {
             CameraFollow.Instance.SetToThirdPerson();
         }
-        
     }
 }

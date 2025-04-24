@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a5f7924cf2657d040ba2ee7b552e3be4
+timeCreated: 1490674415
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_rusty/Materials/MetBarrel_rusty_reg.mat
+  uploadId: 175876

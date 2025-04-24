@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2b0f089c737bae74bb9f928556f22f9f
+timeCreated: 1492592549
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_Black/MetBarrel_Black_opnd_smash_B.prefab
+  uploadId: 175876

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1a9215a0ddf2e0a4788bc886faa57fa5
+timeCreated: 1492593814
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_rusty/MetBarrel_rusty_clsd_deform_A.prefab
+  uploadId: 175876

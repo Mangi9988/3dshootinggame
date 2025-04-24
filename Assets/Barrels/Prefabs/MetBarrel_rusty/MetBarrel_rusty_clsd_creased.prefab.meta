@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5c5313fb60a2bc64e9e132b785a174c4
+timeCreated: 1492593815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_rusty/MetBarrel_rusty_clsd_creased.prefab
+  uploadId: 175876

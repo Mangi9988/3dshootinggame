@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: df644dc2b5b7c944aa7597d953d57306
+timeCreated: 1491207368
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_burnt/Materials/MetBarrel_burnt_deform_B.mat
+  uploadId: 175876

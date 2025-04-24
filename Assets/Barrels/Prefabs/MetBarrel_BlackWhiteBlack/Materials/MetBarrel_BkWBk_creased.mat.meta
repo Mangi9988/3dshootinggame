@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a2a90b109e0014d4b80d54d8f29cceb9
+timeCreated: 1490614120
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_BlackWhiteBlack/Materials/MetBarrel_BkWBk_creased.mat
+  uploadId: 175876

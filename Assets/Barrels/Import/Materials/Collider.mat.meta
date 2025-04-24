@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 34324fbdd4558994cb9a073664b7a761
+timeCreated: 1492590598
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Import/Materials/Collider.mat
+  uploadId: 175876

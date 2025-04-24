@@ -167,17 +167,14 @@ public class PlayerFire : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(hitInfo.normal);
 
 
-                if (hitInfo.collider.gameObject.CompareTag("Enemy"))
+                if (hitInfo.collider.TryGetComponent<IDamageable>(out var receiver))
                 {
-                    Enemy enemy = hitInfo.collider.GetComponent<Enemy>();
-                    Damage damage = new Damage
-                    {
-                        Value = 10,
-                        From = this.gameObject,
+                    var dmg = new Damage {
+                        Value          = 10,
+                        From           = gameObject,
                         KnockbackForce = bulletKnockbackForce
                     };
-                    
-                    enemy.TakeDamage(damage);
+                    receiver.TakeDamage(dmg);
                 }
             }
         }

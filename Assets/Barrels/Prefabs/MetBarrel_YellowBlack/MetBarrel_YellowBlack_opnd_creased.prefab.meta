@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 465861ca7cde36540a4778e972bd77a2
+timeCreated: 1492593815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_YellowBlack/MetBarrel_YellowBlack_opnd_creased.prefab
+  uploadId: 175876

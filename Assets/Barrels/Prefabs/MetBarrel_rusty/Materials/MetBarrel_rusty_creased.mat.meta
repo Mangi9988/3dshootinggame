@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7773eace146413444ab035bed7abbf62
+timeCreated: 1490679759
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_rusty/Materials/MetBarrel_rusty_creased.mat
+  uploadId: 175876

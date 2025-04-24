@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 37e7de66d6726b14080aaff2bb2e4d2d
+timeCreated: 1492593815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_burnt/MetBarrel_burnt_opnd_smash_A.prefab
+  uploadId: 175876

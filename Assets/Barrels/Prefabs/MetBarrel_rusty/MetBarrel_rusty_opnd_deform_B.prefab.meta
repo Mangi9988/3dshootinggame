@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e073e8c76f2a24945b5f2c96b0b18595
+timeCreated: 1492593815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_rusty/MetBarrel_rusty_opnd_deform_B.prefab
+  uploadId: 175876

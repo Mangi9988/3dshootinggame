@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 92d1c44f79d2f644daed6e84fdfc6798
+timeCreated: 1492593815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_BlackYellowBlack/MetBarrel_BlackYellowBlack_clsd_deform_C.prefab
+  uploadId: 175876

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 451b713b1285ac14096c1234f5be7bf7
+timeCreated: 1492592852
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_BlackWhiteBlack/MetBarrel_BlackWhiteBlack_opnd_reg.prefab
+  uploadId: 175876

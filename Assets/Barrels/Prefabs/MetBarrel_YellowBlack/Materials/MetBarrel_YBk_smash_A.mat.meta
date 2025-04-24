@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 280f9745a108c9042b8104fb2f86df81
+timeCreated: 1490270634
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_YellowBlack/Materials/MetBarrel_YBk_smash_A.mat
+  uploadId: 175876

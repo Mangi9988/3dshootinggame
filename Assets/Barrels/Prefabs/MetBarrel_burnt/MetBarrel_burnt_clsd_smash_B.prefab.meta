@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fa229c0bbc2d18e4fb75d5b5db582081
+timeCreated: 1492593816
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_burnt/MetBarrel_burnt_clsd_smash_B.prefab
+  uploadId: 175876

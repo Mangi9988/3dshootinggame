@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a528d14e16dc90d4c83d459a27d7bfec
+timeCreated: 1490865821
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_burnt/Materials/MetBarrel_burnt_reg.mat
+  uploadId: 175876

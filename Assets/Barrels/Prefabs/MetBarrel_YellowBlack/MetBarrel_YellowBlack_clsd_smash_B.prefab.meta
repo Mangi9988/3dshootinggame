@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5604119f878905f4492a9babc34938e8
+timeCreated: 1492593815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_YellowBlack/MetBarrel_YellowBlack_clsd_smash_B.prefab
+  uploadId: 175876

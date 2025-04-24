@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b5484133102292d4082df9eff3f7ff70
+timeCreated: 1490616174
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87026
+  packageName: Metallic barrels
+  packageVersion: 1.0
+  assetPath: Assets/Barrels/Prefabs/MetBarrel_BlackYellowBlack/Materials/MetBarrel_BkYBk_deform_B.mat
+  uploadId: 175876
