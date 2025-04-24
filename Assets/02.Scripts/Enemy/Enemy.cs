@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class Enemy : MonoBehaviour
     {
         Idle,
         Patrol,
+        RandomPatrol,
         Trace,
         Return,
         Attack,
@@ -48,7 +48,12 @@ public class Enemy : MonoBehaviour
     private Transform _currentDestination;
     public int PatrolCount = 3;
     private int _currentPatrolIndex = 0;
-
+    private bool _isCompletePatrol = false;
+    
+    [Header("랜덤순찰")]
+    private Vector3 _randomTarget;
+    private bool _hasRandomTarget = false;
+    public float RandomPartolDistance = 7f;
     
     private PoolItem _poolItem;
     private void Awake()
@@ -81,6 +86,11 @@ public class Enemy : MonoBehaviour
             case EnemyState.Patrol:
             {
                 Patrol();
+                break;
+            }
+            case EnemyState.RandomPatrol:
+            {
+                RandomPatrol();
                 break;
             }
             case EnemyState.Trace:
@@ -155,7 +165,14 @@ public class Enemy : MonoBehaviour
         Debug.Log("Idle -> Patrol");
 
         _idleCoroutine = null;
-        CurrentState = EnemyState.Patrol;
+        if (_isCompletePatrol == false)
+        {
+            CurrentState = EnemyState.Patrol;  
+        }
+        else if (_isCompletePatrol == true)
+        {
+            CurrentState = EnemyState.RandomPatrol;
+        }
     }
     
     private void Patrol()
@@ -176,6 +193,7 @@ public class Enemy : MonoBehaviour
             if(_currentPatrolIndex >= PatrolCount)
             {
                 Debug.Log("순찰완료");
+                _isCompletePatrol = true;
             }
 
             Debug.Log("Patrol -> Idle");
@@ -205,6 +223,47 @@ public class Enemy : MonoBehaviour
         _currentDestination = patrolPoint[randomIndex];
     }
 
+    private void RandomPatrol()
+    {
+        // 플레이어 감지되면 Trace 상태로 전환
+        if (Vector3.Distance(transform.position, _player.transform.position) <= FindDistance)
+        {
+            Debug.Log("RandomPatrol -> Trace");
+            _hasRandomTarget = false;
+            CurrentState = EnemyState.Trace;
+            return;
+        }
+
+        // 아직 랜덤 타겟이 없다면 하나 생성
+        if (!_hasRandomTarget)
+        {
+            _randomTarget = SetRandomPointAround(_returnPosition, RandomPartolDistance);
+            _hasRandomTarget = true;
+        }
+
+        // 이동
+        Vector3 direction = (_randomTarget - transform.position).normalized;
+        _characterController.Move(direction * MoveSpeed * Time.deltaTime);
+
+        // 도착했으면 -> Idle
+        if (Vector3.Distance(transform.position, _randomTarget) <= BackToReturnPositionDistance)
+        {
+            Debug.Log("RandomPatrol -> Idle");
+            _hasRandomTarget = false;
+            _returnPosition = _randomTarget;
+            CurrentState = EnemyState.Idle;
+        }
+    }
+
+    private Vector3 SetRandomPointAround(Vector3 center, float range)
+    {
+        return new Vector3(
+            Random.Range(-range, range),
+            0f,
+            Random.Range(-range, range)
+        ) + center;
+    }
+
     private void Trace()
     {
         // 전이 : 플레이어와 멀어지거나 복귀 지점과 멀어지면 -> Return
@@ -232,7 +291,7 @@ public class Enemy : MonoBehaviour
     private void Return()
     {
         // 전이 : 시작 위치와 가까워 지면 -> Idle
-        if (Vector3.Distance(transform.position, _returnPosition) <= 0.1f)
+        if (Vector3.Distance(transform.position, _returnPosition) <= BackToReturnPositionDistance)
         {
             Debug.Log("Return -> Idle");
             transform.position = _returnPosition;
