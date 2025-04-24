@@ -14,7 +14,8 @@ public class CameraRotate : MonoBehaviour
     // 카메라 각도는 0도에서부터 시작한다고 기준을 세운다
     private float _rotationX = 0f;
     private float _rotationY = 0f;
-    
+    public Transform Target;
+    public Transform TPSWatchTarget;
     private void Update()
     {
         // 1. 마우스 입력을 받는다 ( 마우스의 커서의 움직임 방향 )
@@ -28,7 +29,8 @@ public class CameraRotate : MonoBehaviour
         
         
         // 3. 회전 방향으로 회전시킨다.
-        transform.eulerAngles = new Vector3(_rotationY, _rotationX, 0f);
+        Target.transform.eulerAngles  = new Vector3(_rotationY, _rotationX, 0f);
+        transform.LookAt(TPSWatchTarget);
         
         HandleMouseSensitivity();
     }

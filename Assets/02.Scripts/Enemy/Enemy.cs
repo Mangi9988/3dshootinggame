@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
@@ -20,13 +21,14 @@ public class Enemy : MonoBehaviour
     }
     [SerializeField] private GameObject _player;
     private CharacterController _characterController;
+    private NavMeshAgent _agent;
     
     [Header("범위")]
     public float FindDistance = 7f;   // 탐색 범위
     public float AttackDistance = 2f; // 공격 범위
     public float ReturnDistance = 10f;// 복귀 범위
     public float BackToReturnPositionDistance = 1.2f;
-    private Vector3 _returnPosition;
+    private Vector3 _lastPosition;
     private Vector3 _startPosition;
 
     [Header("공격")]
@@ -63,8 +65,11 @@ public class Enemy : MonoBehaviour
     
     private void Start()
     {
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = MoveSpeed;
+        
         _startPosition = transform.position;
-        _returnPosition = _startPosition;
+        _lastPosition = _startPosition;
         _characterController = GetComponent<CharacterController>();
         _player = GameObject.FindGameObjectWithTag("Player");
         SetRandomPatrolPoint();
@@ -162,15 +167,15 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(IdleTime);
 
-        Debug.Log("Idle -> Patrol");
-
         _idleCoroutine = null;
         if (_isCompletePatrol == false)
         {
+            Debug.Log("Idle -> Patrol");
             CurrentState = EnemyState.Patrol;  
         }
         else if (_isCompletePatrol == true)
         {
+            Debug.Log("Idle -> RandomPatrol");
             CurrentState = EnemyState.RandomPatrol;
         }
     }
@@ -186,23 +191,27 @@ public class Enemy : MonoBehaviour
         
         if (Vector3.Distance(transform.position, _currentDestination.position) < BackToReturnPositionDistance)
         {
-            //transform.position = _currentDestination.position;
-            SetRandomPatrolPoint();
-            _startPosition = transform.position;
             _currentPatrolIndex++;
-            if(_currentPatrolIndex >= PatrolCount)
+            if (_currentPatrolIndex >= PatrolCount)
             {
                 Debug.Log("순찰완료");
                 _isCompletePatrol = true;
+                Debug.Log($"랜덤 순찰 타겟 생성 기준: {_lastPosition}");
+            }
+            else
+            {
+                SetRandomPatrolPoint();
             }
 
+            _lastPosition = transform.position;
             Debug.Log("Patrol -> Idle");
             CurrentState = EnemyState.Idle;
             return;
         }
 
-        Vector3 direction = (_currentDestination.position - transform.position).normalized;
-        _characterController.Move(direction * MoveSpeed * Time.deltaTime);
+        // Vector3 direction = (_currentDestination.position - transform.position).normalized;
+        // _characterController.Move(direction * MoveSpeed * Time.deltaTime);
+        _agent.SetDestination(_currentDestination.transform.position);
     }
     
     private void SetRandomPatrolPoint()
@@ -237,20 +246,21 @@ public class Enemy : MonoBehaviour
         // 아직 랜덤 타겟이 없다면 하나 생성
         if (!_hasRandomTarget)
         {
-            _randomTarget = SetRandomPointAround(_returnPosition, RandomPartolDistance);
+            _randomTarget = SetRandomPointAround(_lastPosition, RandomPartolDistance);
             _hasRandomTarget = true;
         }
 
         // 이동
-        Vector3 direction = (_randomTarget - transform.position).normalized;
-        _characterController.Move(direction * MoveSpeed * Time.deltaTime);
+        // Vector3 direction = (_randomTarget - transform.position).normalized;
+        // _characterController.Move(direction * MoveSpeed * Time.deltaTime);
+        _agent.SetDestination(_randomTarget);
 
         // 도착했으면 -> Idle
         if (Vector3.Distance(transform.position, _randomTarget) <= BackToReturnPositionDistance)
         {
             Debug.Log("RandomPatrol -> Idle");
             _hasRandomTarget = false;
-            _returnPosition = _randomTarget;
+            _lastPosition = _randomTarget;
             CurrentState = EnemyState.Idle;
         }
     }
@@ -284,24 +294,25 @@ public class Enemy : MonoBehaviour
         
         
         // 쫓아간다
-        Vector3 diraction = (_player.transform.position - transform.position).normalized;
-        _characterController.Move(diraction * MoveSpeed * Time.deltaTime);
+        //Vector3 diraction = (_player.transform.position - transform.position).normalized;
+        //_characterController.Move(diraction * MoveSpeed * Time.deltaTime);
+        _agent.SetDestination(_player.transform.position);
     }
 
     private void Return()
     {
         // 전이 : 시작 위치와 가까워 지면 -> Idle
-        if (Vector3.Distance(transform.position, _returnPosition) <= BackToReturnPositionDistance)
+        if (Vector3.Distance(transform.position, _lastPosition) <= BackToReturnPositionDistance)
         {
             Debug.Log("Return -> Idle");
-            transform.position = _returnPosition;
+            transform.position = _lastPosition;
             CurrentState = EnemyState.Idle;
             return;
         }
         
         // 전이 : 되돌아 가는 도중 적을 찾으면 다시 Trace
         if (Vector3.Distance(transform.position, _player.transform.position) <= FindDistance &&
-            Vector3.Distance(_returnPosition, _player.transform.position) <= ReturnDistance)
+            Vector3.Distance(_lastPosition, _player.transform.position) <= ReturnDistance)
         {
             Debug.Log("Return -> Trace");
             CurrentState = EnemyState.Trace;
@@ -309,8 +320,9 @@ public class Enemy : MonoBehaviour
         }
         
         // 시작 위치와되돌아간다
-        Vector3 diraction = (_returnPosition - transform.position).normalized;
-        _characterController.Move(diraction * MoveSpeed * Time.deltaTime);
+        //Vector3 diraction = (_returnPosition - transform.position).normalized;
+        //_characterController.Move(diraction * MoveSpeed * Time.deltaTime);
+        _agent.SetDestination(_lastPosition);
     }
 
     private void Attack()
@@ -349,6 +361,8 @@ public class Enemy : MonoBehaviour
         //     Debug.Log("Damaged -> Die");
         //     CurrentState = EnemyState.Die;
         // }
+        _agent.isStopped = true;
+        _agent.ResetPath();
         yield return new WaitForSeconds(DamagedTime);
         Debug.Log("Damaged -> Trace");
         CurrentState = EnemyState.Trace;

@@ -155,7 +155,7 @@ public class PlayerFire : MonoBehaviour
             _currentBulletCount--;
             UpdateBulletUI();
 
-            Ray ray = new Ray(FirePosition.transform.position, Camera.main.transform.forward);
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             RaycastHit hitInfo = new RaycastHit();
             bool isHit = Physics.Raycast(ray, out hitInfo);
             if (isHit)

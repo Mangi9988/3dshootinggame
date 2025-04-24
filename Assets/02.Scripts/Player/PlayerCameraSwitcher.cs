@@ -2,21 +2,16 @@ using UnityEngine;
 
 public class PlayerCameraSwitcher : MonoBehaviour
 {
-    private bool _isFirstPerson = true;
-
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.V))
-    //     {
-    //         if (_isFirstPerson)
-    //         {
-    //             CameraFollow.Instance.SetToThirdPerson();
-    //         }
-    //         else
-    //         {
-    //             CameraFollow.Instance.SetToFirstPerson();
-    //         }
-    //         _isFirstPerson = !_isFirstPerson;
-    //     }
-    // }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            CameraFollow.Instance.SetToFirstPerson();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            CameraFollow.Instance.SetToThirdPerson();
+        }
+        
+    }
 }
