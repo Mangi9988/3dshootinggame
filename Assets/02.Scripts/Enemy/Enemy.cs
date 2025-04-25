@@ -22,10 +22,6 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private GameObject _player;
     private CharacterController _characterController;
     private NavMeshAgent _agent;
-
-    [Header("몬스터 종류")] 
-    public bool FollowingZombie = false;
-    private float FollowingZombieDistance = 9999;
     
     [Header("범위")]
     public float FindDistance = 7f;   // 탐색 범위
@@ -48,7 +44,6 @@ public class Enemy : MonoBehaviour, IDamageable
     public float DamagedTime = 0.5f;
     public float DieTime = 2f;
     public float IdleTime = 5f;
-    [SerializeField] private float _knockbackDecayTime = 0.5f;
     
     [Header("순찰")]
     private Coroutine _idleCoroutine;
@@ -84,12 +79,6 @@ public class Enemy : MonoBehaviour, IDamageable
         _characterController = GetComponent<CharacterController>();
         _player = GameObject.FindGameObjectWithTag("Player");
         SetRandomPatrolPoint();
-
-        if (FollowingZombie == true)
-        {
-            FindDistance = FollowingZombieDistance;
-            ReturnDistance = FollowingZombieDistance;
-        }
     }
     
     // 2. 현재 상태를 지정한다
@@ -389,7 +378,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(DieTime);
         Debug.Log("크아악");
-        gameObject.SetActive(false);
+        _poolItem.ReturnToPoolAs<Enemy>();
         // 죽는다
     }
 }

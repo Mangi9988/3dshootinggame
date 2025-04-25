@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 589970906550023058}
   - component: {fileID: 909828956986293817}
   - component: {fileID: 6677510683228128946}
-  - component: {fileID: 8068966936818038941}
+  - component: {fileID: 8116560792746997993}
   - component: {fileID: 252271253717941322}
   - component: {fileID: 6517708293338753834}
   m_Layer: 0
@@ -157,7 +157,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 715c96bd71db9424f919298ba78b2ad8, type: 2}
+  - {fileID: 2100000, guid: 4858972a6b3279d459e1b19f35cd3813, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,7 +227,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8068966936818038941
+--- !u!114 &8116560792746997993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,27 +236,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3304682850977557456}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 240d99cbbe78ef440a1ba140250b2c9c, type: 3}
+  m_Script: {fileID: 11500000, guid: b10f8ef966aaa34479c68782e1c16566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  FollowingZombie: 1
-  FindDistance: 15
   AttackDistance: 2
-  ReturnDistance: 50
-  BackToReturnPositionDistance: 1.2
-  AttackCooltime: 1.5
-  MoveSpeed: 8
-  MaxHealth: 100
+  AttackCooltime: 0.7
+  MoveSpeed: 10
+  MaxHealth: 70
   _currentHealth: 0
-  DamagedTime: 0.1
+  DamagedTime: 0.5
   DieTime: 2
-  IdleTime: 5
-  _knockbackDecayTime: 0.5
-  _patrolPointData: {fileID: 11400000, guid: 0a501cf4caa99154cb46edd41bfa40d9, type: 2}
-  PatrolPoints: []
-  PatrolCount: 3
-  RandomPartolDistance: 3
   CurrentState: 0
 --- !u!114 &252271253717941322
 MonoBehaviour:
