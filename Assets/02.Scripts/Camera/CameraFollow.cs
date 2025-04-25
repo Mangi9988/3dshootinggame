@@ -7,7 +7,8 @@ public class CameraFollow : MonoBehaviour
     
     public Transform Target;
     public Transform TPSTarget;
- 
+    public Transform QuarterViewTarget;
+    
     private Transform _currentTarget;
     
     public void Awake()
@@ -30,5 +31,10 @@ public class CameraFollow : MonoBehaviour
     public void SetToThirdPerson()
     {
         _currentTarget = TPSTarget;
+    }
+
+    public void SetToQuarterView()
+    {
+        _currentTarget = QuarterViewTarget;
     }
 }

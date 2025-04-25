@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int spawnCount;
     [SerializeField] private float spawnRange = 5f; // 중심 기준 랜덤 거리
     [SerializeField] private float delayBetweenSpawns = 5f;
+    [SerializeField] private int _maxSpawnTry = 10;
     private Coroutine _spawnCoroutine;
     
     private void Update()
@@ -48,17 +49,19 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 GetRandomPositionOnNavMesh(Vector3 center, float range)
     {
-        Vector3 randomPos = new Vector3(
-            Random.Range(-range, range),
-            0f,
-            Random.Range(-range, range)
-        ) + center;
-
-        if (NavMesh.SamplePosition(randomPos, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
+        for (int i = 0; i < _maxSpawnTry; i++)
         {
-            return hit.position;
-        }
+            Vector3 randomPos = new Vector3(
+                Random.Range(-range, range),
+                0f,
+                Random.Range(-range, range)
+            ) + center;
 
-        return Vector3.zero; // 실패한 경우
+            if (NavMesh.SamplePosition(randomPos, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+        }
+        return Vector3.zero;
     }
 }

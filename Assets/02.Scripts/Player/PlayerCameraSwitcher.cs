@@ -12,5 +12,9 @@ public class PlayerCameraSwitcher : MonoBehaviour
         {
             CameraFollow.Instance.SetToThirdPerson();
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            CameraFollow.Instance.SetToQuarterView();
+        }
     }
 }

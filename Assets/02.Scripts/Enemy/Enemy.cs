@@ -273,11 +273,20 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private Vector3 SetRandomPointAround(Vector3 center, float range)
     {
-        return new Vector3(
-            Random.Range(-range, range),
-            0f,
-            Random.Range(-range, range)
-        ) + center;
+        while (true)
+        {
+            Vector3 randomPos = new Vector3(
+                Random.Range(-range, range),
+                0f,
+                Random.Range(-range, range)
+            ) + center;
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPos, out hit, 2.0f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+        }
     }
 
     private void Trace()
