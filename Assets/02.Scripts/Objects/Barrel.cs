@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 // 폭발 가능 대상은 IDamageable 구현
 public class Barrel : MonoBehaviour, IDamageable
@@ -18,12 +19,14 @@ public class Barrel : MonoBehaviour, IDamageable
     [SerializeField] private float _destroyDelayTime;
     
     [Header("날리기")]
-    [SerializeField] private float _pieceExplosionForce = 2f;
-    [SerializeField] private float _pieceExplosionTorque = 10f;
+    [SerializeField] private float _flightExplosionForce = 2f;
+    [SerializeField] private float _flightExplosionTorque = 10f;
     public float MinForceRandomRange = -0.5f;
     public float MaxForceRandomRange = 0.5f;
-    public float MinTorqueRandomRange = -0.5f;
-    public float MaxTorqueRandomRange = 0.5f;
+    public float ForceY = 1f;
+    // public float MinTorqueRandomRange = -0.5f;
+    // public float MaxTorqueRandomRange = 0.5f;
+    // public float TorqueX = 1f;
     
     private Rigidbody _rigidbody;
     
@@ -36,43 +39,52 @@ public class Barrel : MonoBehaviour, IDamageable
     public void TakeDamage(Damage damage)
     {
         if (_isDead)
+        {
             return;
-
+        }
+        
         _currentHealth -= damage.Value;
         if (_currentHealth <= 0)
+        {
             Die();
+        }
+            
     }
     
     private void Die()
     {
         _isDead = true;
 
-        // 1) 폭발 이펙트 생성 및 폭발 로직 호출
-
         Explosion explosion = Instantiate(
             ExplosionPrefab,
             transform.position,
             Quaternion.identity
         );
+
         explosion.Explode();
         
-
-        // 2) 외형 전환
         _beforeObject.SetActive(false);
         _afterObject.SetActive(true);
-
-        // 3) 파편 물리 넉백
-        Vector3 randDirection = new Vector3
+        
+        Vector3 flightDirection = new Vector3
             (Random.Range(MinForceRandomRange, MaxForceRandomRange), 
-            1f,
+            ForceY,
             Random.Range(MinForceRandomRange, MaxForceRandomRange)).normalized;
         
-        _rigidbody.AddForce(randDirection * _pieceExplosionForce, ForceMode.Impulse);
+        _rigidbody.AddForce(flightDirection * _flightExplosionForce, ForceMode.Impulse);
 
-        Vector3 randTorque = new Vector3
-            (1f, Random.Range(MinTorqueRandomRange, MaxTorqueRandomRange), 
-            Random.Range(MinTorqueRandomRange, MaxTorqueRandomRange)).normalized * _pieceExplosionTorque;
-        _rigidbody.AddTorque(randTorque, ForceMode.Impulse);
+        
+        // 4) 로컬 Z축(배럴 길이 방향)으로만 토크 주기
+        float torqueAmount = Random.Range(-_flightExplosionTorque, _flightExplosionTorque);
+        _rigidbody.AddRelativeTorque(Vector3.forward * torqueAmount,
+            ForceMode.Impulse);
+        // 이거 공부좀 더해
+        
+        
+        // Vector3 flightTorque = new Vector3
+        //     (TorqueX, Random.Range(MinTorqueRandomRange, MaxTorqueRandomRange), 
+        //     Random.Range(MinTorqueRandomRange, MaxTorqueRandomRange)).normalized * _flightExplosionTorque;
+        // _rigidbody.AddTorque(flightTorque, ForceMode.Impulse);
 
         // 4) 지정 시간 후 오브젝트 제거
         StartCoroutine(DestroyAfterDelay());

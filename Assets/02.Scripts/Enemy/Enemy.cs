@@ -22,6 +22,10 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private GameObject _player;
     private CharacterController _characterController;
     private NavMeshAgent _agent;
+
+    [Header("몬스터 종류")] 
+    public bool FollowingZombie = false;
+    private float FollowingZombieDistance = 9999;
     
     [Header("범위")]
     public float FindDistance = 7f;   // 탐색 범위
@@ -37,17 +41,21 @@ public class Enemy : MonoBehaviour, IDamageable
     
     [Header("스텟")]
     public float MoveSpeed = 3.3f;
-    public int Health = 100;
+    public int MaxHealth = 100;
+    public int _currentHealth;
     
     [Header("시간")]
     public float DamagedTime = 0.5f;
     public float DieTime = 2f;
     public float IdleTime = 5f;
+    [SerializeField] private float _knockbackDecayTime = 0.5f;
     
     [Header("순찰")]
     private Coroutine _idleCoroutine;
-    public Transform[] PatrolPoints;
-    private Transform _currentDestination;
+    [SerializeField] private PatrolPointData _patrolPointData;
+    public Vector3[] PatrolPoints;
+    private List<Transform> _runtimePatrolPoints = new List<Transform>();
+    private Vector3 _currentDestination;
     public int PatrolCount = 3;
     private int _currentPatrolIndex = 0;
     private bool _isCompletePatrol = false;
@@ -65,14 +73,23 @@ public class Enemy : MonoBehaviour, IDamageable
     
     private void Start()
     {
+        _currentHealth = MaxHealth;
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = MoveSpeed;
+        
+        PatrolPoints = _patrolPointData.PatrolPositions;
         
         _startPosition = transform.position;
         _lastPosition = _startPosition;
         _characterController = GetComponent<CharacterController>();
         _player = GameObject.FindGameObjectWithTag("Player");
         SetRandomPatrolPoint();
+
+        if (FollowingZombie == true)
+        {
+            FindDistance = FollowingZombieDistance;
+            ReturnDistance = FollowingZombieDistance;
+        }
     }
     
     // 2. 현재 상태를 지정한다
@@ -124,12 +141,12 @@ public class Enemy : MonoBehaviour, IDamageable
             return;
         }
         
-        Health -= damage.Value;
+        _currentHealth -= damage.Value;
 
         Vector3 knockbackDir = (transform.position - damage.From.transform.position).normalized;
         _characterController.Move(knockbackDir * damage.KnockbackForce);
 
-        if (Health <= 0)
+        if (_currentHealth <= 0)
         {
             Debug.Log($"상태 전환 : {CurrentState} -> Die");
             CurrentState = EnemyState.Die;
@@ -189,7 +206,7 @@ public class Enemy : MonoBehaviour, IDamageable
             return;
         }
         
-        if (Vector3.Distance(transform.position, _currentDestination.position) < BackToReturnPositionDistance)
+        if (Vector3.Distance(transform.position, _currentDestination) < BackToReturnPositionDistance)
         {
             _currentPatrolIndex++;
             if (_currentPatrolIndex >= PatrolCount)
@@ -211,25 +228,25 @@ public class Enemy : MonoBehaviour, IDamageable
 
         // Vector3 direction = (_currentDestination.position - transform.position).normalized;
         // _characterController.Move(direction * MoveSpeed * Time.deltaTime);
-        _agent.SetDestination(_currentDestination.transform.position);
+        _agent.SetDestination(_currentDestination);
     }
     
     private void SetRandomPatrolPoint()
     {
-        List<Transform> patrolPoint = new List<Transform>();
-        for (int i = 0; i < PatrolPoints.Length; i++)
+        List<Vector3> candidatePoints = new List<Vector3>();
+        foreach (Vector3 position in PatrolPoints)
         {
-            if (PatrolPoints[i] == _currentDestination)
-            {
+            if (_currentDestination != Vector3.zero && position == _currentDestination)
                 continue;
-            }
-            else
-            {
-                patrolPoint.Add(PatrolPoints[i]);
-            }
+
+            candidatePoints.Add(position);
         }
-        int randomIndex = UnityEngine.Random.Range(0, patrolPoint.Count);
-        _currentDestination = patrolPoint[randomIndex];
+
+        if (candidatePoints.Count > 0)
+        {
+            int randomIndex = Random.Range(0, candidatePoints.Count);
+            _currentDestination = candidatePoints[randomIndex];
+        }
     }
 
     private void RandomPatrol()

@@ -13,21 +13,7 @@ public class Explosion : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
-            // 1) 물리 넉백
-            Rigidbody rigidbody = hit.attachedRigidbody;
-            if (rigidbody != null)
-            {
-                Vector3 dir  = (hit.transform.position - center).normalized;
-                float  dist = Vector3.Distance(center, hit.transform.position);
-                float  atten = 1f - Mathf.Clamp01(dist / Radius);
-                float  force = KnockbackForce * atten;
-                rigidbody.AddForce(dir * force, ForceMode.Impulse);
-            }
-
-
-
-            // 2) 데미지 전파
-            if (hit.TryGetComponent<IDamageable>(out var receiver))
+            if (hit.TryGetComponent<IDamageable>(out IDamageable damageable))
             {
                 Damage damage = new Damage
                 {
@@ -35,7 +21,7 @@ public class Explosion : MonoBehaviour
                     From           = gameObject,
                     KnockbackForce = KnockbackForce
                 };
-                receiver.TakeDamage(damage);
+                damageable.TakeDamage(damage);
             }
         }
     }
@@ -43,11 +29,5 @@ public class Explosion : MonoBehaviour
     private void OnDisable()
     {
         Destroy(gameObject);
-    }
-    
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = new Color(1, 0.5f, 0, 0.3f);
-        Gizmos.DrawSphere(transform.position, Radius);
     }
 }
