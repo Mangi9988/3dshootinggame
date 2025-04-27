@@ -2,7 +2,7 @@ using UnityEngine;
 
 public struct Damage
 {
-    public int Value;
+    public float Value;
     public GameObject From;
     public float KnockbackForce;
 }

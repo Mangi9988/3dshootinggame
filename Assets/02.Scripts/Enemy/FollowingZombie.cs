@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class FollowingZombie : MonoBehaviour, IDamageable
@@ -24,12 +25,14 @@ public class FollowingZombie : MonoBehaviour, IDamageable
 
     [Header("공격")]
     public float AttackCooltime = 0.7f;
-    private float _attackCooltimer = 0f;  
+    private float _attackCooltimer = 0f;
+    public int AttackDamageValue = 8;
     
     [Header("스텟")]
     public float MoveSpeed = 10f;
-    public int MaxHealth = 70;
-    public int _currentHealth;
+    public float MaxHealth = 70;
+    public float _currentHealth;
+    public Image HealthGauge;
     
     [Header("시간")]
     public float DamagedTime = 0.5f;
@@ -44,6 +47,7 @@ public class FollowingZombie : MonoBehaviour, IDamageable
     private void Start()
     {
         _currentHealth = MaxHealth;
+        UpdateHealthBar();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = MoveSpeed;
         
@@ -81,7 +85,8 @@ public class FollowingZombie : MonoBehaviour, IDamageable
         }
         
         _currentHealth -= damage.Value;
-
+        UpdateHealthBar();
+        
         Vector3 knockbackDir = (transform.position - damage.From.transform.position).normalized;
         _characterController.Move(knockbackDir * damage.KnockbackForce);
 
@@ -94,6 +99,11 @@ public class FollowingZombie : MonoBehaviour, IDamageable
         CurrentState = EnemyState.Damaged;
 
         StartCoroutine(Damaged_Coroutine());
+    }
+    
+    private void UpdateHealthBar()
+    {
+        HealthGauge.fillAmount = _currentHealth / MaxHealth;
     }
     
 
@@ -125,8 +135,19 @@ public class FollowingZombie : MonoBehaviour, IDamageable
         _attackCooltimer += Time.deltaTime;
         if (_attackCooltimer >= AttackCooltime)
         {
-            Debug.Log("으익 이녀석 빠르다");
             _attackCooltimer = 0f;
+            
+            if (_player.TryGetComponent<IDamageable>(out IDamageable damageable))
+            {
+                Damage damage = new Damage
+                {
+                    Value = AttackDamageValue,
+                    From = gameObject,
+                    KnockbackForce = 0f
+                };
+
+                damageable.TakeDamage(damage);
+            }
         }
     }
 

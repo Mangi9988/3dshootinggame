@@ -11,7 +11,7 @@ public class PlayerStatData : ScriptableObject
     public int BonusJumpCount = 1;
 
     [Header("스태미나 및 체력")]
-    public int Health = 100;
+    public float MaxHealth = 100;
     public float MaxStamina = 100f;
     public float StaminaUseRate = 20f;
     public float StaminaRechargeRate = 10f;

@@ -4,21 +4,21 @@ using UnityEngine.UI;
 public class UI_Player : MonoBehaviour
 {
     [Header("UI References")]
-    public Image staminaGauge;
+    public Image StaminaGauge;
+    public Image HealthGauge;
     
-    private PlayerMove playerMove;
+    private PlayerMove _playerMove;
+    private PlayerHealth _playerHealth;
 
     private void Start()
     {
-        playerMove = FindObjectOfType<PlayerMove>();
+        _playerMove = FindObjectOfType<PlayerMove>();
+        _playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     private void Update()
     {
-        if (playerMove != null && staminaGauge != null)
-        {
-            // 스태미나 비율을 게이지에 반영
-            staminaGauge.fillAmount = playerMove.GetStaminaRatio();
-        }
+            StaminaGauge.fillAmount = _playerMove.GetStaminaRatio();
+            HealthGauge.fillAmount = _playerHealth.GetHealthRatio();
     }
 }

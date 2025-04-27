@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour, IDamageable
@@ -33,12 +34,14 @@ public class Enemy : MonoBehaviour, IDamageable
 
     [Header("공격")]
     public float AttackCooltime = 1.5f;
-    private float _attackCooltimer = 0f;  
+    private float _attackCooltimer = 0f;
+    public int AttackDamageValue = 10;
     
     [Header("스텟")]
     public float MoveSpeed = 3.3f;
-    public int MaxHealth = 100;
-    public int _currentHealth;
+    public float MaxHealth = 100;
+    public float _currentHealth;
+    public Image HealthGauge;
     
     [Header("시간")]
     public float DamagedTime = 0.5f;
@@ -69,6 +72,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private void Start()
     {
         _currentHealth = MaxHealth;
+        UpdateHealthBar();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = MoveSpeed;
         
@@ -131,7 +135,8 @@ public class Enemy : MonoBehaviour, IDamageable
         }
         
         _currentHealth -= damage.Value;
-
+        UpdateHealthBar();
+        
         Vector3 knockbackDir = (transform.position - damage.From.transform.position).normalized;
         _characterController.Move(knockbackDir * damage.KnockbackForce);
 
@@ -144,6 +149,11 @@ public class Enemy : MonoBehaviour, IDamageable
         CurrentState = EnemyState.Damaged;
 
         StartCoroutine(Damaged_Coroutine());
+    }
+
+    private void UpdateHealthBar()
+    {
+        HealthGauge.fillAmount = _currentHealth / MaxHealth;
     }
 
     // 3. 상태 함수들을 구현한다
@@ -355,8 +365,19 @@ public class Enemy : MonoBehaviour, IDamageable
         _attackCooltimer += Time.deltaTime;
         if (_attackCooltimer >= AttackCooltime)
         {
-            Debug.Log("으익");
             _attackCooltimer = 0f;
+            
+            if (_player.TryGetComponent<IDamageable>(out IDamageable damageable))
+            {
+                Damage damage = new Damage
+                {
+                    Value = AttackDamageValue,
+                    From = gameObject,
+                    KnockbackForce = 0f
+                };
+
+                damageable.TakeDamage(damage);
+            }
         }
     }
 

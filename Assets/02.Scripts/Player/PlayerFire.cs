@@ -27,7 +27,7 @@ public class PlayerFire : MonoBehaviour
     [SerializeField] private int _currentBulletCount;
     [SerializeField] private TextMeshProUGUI _bulletText;
     private float _cooldownRemaining = 0f;
-    [SerializeField] private int _bulletDamage = 10;
+    [SerializeField] private float _bulletDamage = 10;
     [SerializeField] private float _bulletKnockbackForce = 5f;
     
     [Header("재장전")]

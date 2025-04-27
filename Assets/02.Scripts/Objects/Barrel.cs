@@ -6,8 +6,8 @@ using UnityEngine.Serialization;
 public class Barrel : MonoBehaviour, IDamageable
 {
     [Header("체력")]
-    [SerializeField] private int _maxHealth = 100;
-    private int _currentHealth;
+    [SerializeField] private float _maxHealth = 100;
+    private float _currentHealth;
     private bool _isDead;
     
     [Header("이펙트")]

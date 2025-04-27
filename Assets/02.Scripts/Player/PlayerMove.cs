@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlayerMove : MonoBehaviour, IDamageable
+public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private PlayerStatData _statData;
     
@@ -217,10 +217,5 @@ public class PlayerMove : MonoBehaviour, IDamageable
     {
         bool wallAhead = Physics.Raycast(transform.position, transform.forward, out _wallHit, _statData.WallCheckDistance, _wallLayer);
         return wallAhead;
-    }
-
-    public void TakeDamage(Damage damage)
-    {
-        
     }
 }
