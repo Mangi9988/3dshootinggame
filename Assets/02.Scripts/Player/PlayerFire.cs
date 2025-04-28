@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerFire : MonoBehaviour
 {
     public GameObject FirePosition;
+    public PlayerWeaponData GunData;
     
     [Header("수류탄")]
     public int MaxBombsCount = 3;
@@ -21,7 +22,7 @@ public class PlayerFire : MonoBehaviour
     private float _chargeTimer;
     private bool _isCharging;
 
-    [Header("총알 발사")]
+    /*[Header("총알 발사")]
     [SerializeField] private float FireCooldown;
     public int MaxBulletCount = 50;
     [SerializeField] private int _currentBulletCount;
@@ -34,16 +35,25 @@ public class PlayerFire : MonoBehaviour
     [SerializeField] private float ReloadTime = 2f;
     private float _reloadTimer = 0f;
     private bool _isReloading = false;
+    [SerializeField] private Image _reloadGaugeBar;*/
+
+    [Header("총 UI")]
     [SerializeField] private Image _reloadGaugeBar;
+    [SerializeField] private TextMeshProUGUI _bulletText;
     
+    private Gun _gun;
+    private Animator _animator;
 
     private void Start()
-    {
+    {        
+        _gun = new Gun(GunData, FirePosition.transform, gameObject);
+        
+        _animator = GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
         _haveBombsCount = MaxBombsCount;
         _chargeGaugeBar.fillAmount = 0f;
         UpdateBombUI();
-        _currentBulletCount = MaxBulletCount;
+        
         _reloadGaugeBar.fillAmount = 0f;
         UpdateBulletUI();
     }
@@ -53,10 +63,20 @@ public class PlayerFire : MonoBehaviour
         HandleBombChargeStart();
         HandleBombCharging();
         HandleBombRelease();
-        UpdateFireCooldown();
-        HandleBulletFire();
-        StartReload();
-        Reloading();
+        _gun.Update();
+
+        if (Input.GetMouseButton(0))
+        {
+            _gun.Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _gun.StartReload();
+        }
+
+        UpdateBulletUI();
+        UpdateReloadUI();
     }
 
     private void HandleBombChargeStart()
@@ -116,7 +136,7 @@ public class PlayerFire : MonoBehaviour
         }
     }
 
-    private void UpdateFireCooldown()
+    /*private void UpdateFireCooldown()
     {
         if (_cooldownRemaining < FireCooldown)
         {
@@ -154,6 +174,7 @@ public class PlayerFire : MonoBehaviour
 
             _cooldownRemaining = 0f;
             _currentBulletCount--;
+            _animator.SetTrigger("Shot");
             UpdateBulletUI();
 
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -207,10 +228,15 @@ public class PlayerFire : MonoBehaviour
                 _reloadGaugeBar.fillAmount = 0f;
             }
         }
-    }
+    }*/
     
     private void UpdateBulletUI()
     { 
-        _bulletText.text = $"총알 : {_currentBulletCount} / {MaxBulletCount}";
+        _bulletText.text = $"총알 : {_gun.CurrentBulletCount} / {_gun.MaxBulletCount}";
+    }
+
+    private void UpdateReloadUI()
+    {
+        _reloadGaugeBar.fillAmount = _gun.ReloadProgress;
     }
 }

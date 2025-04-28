@@ -36,6 +36,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (_currentHealth <= 0)
         { 
             gameObject.SetActive(false);
+            GameManager.Instance.GameOver();
         }
 
         StartCoroutine(Damaged_Coroutine());

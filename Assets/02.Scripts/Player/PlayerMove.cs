@@ -23,9 +23,12 @@ public class PlayerMove : MonoBehaviour
     private Vector3 _moveDirection;
     private CharacterController _characterController;
     private const float GRAVITY = -9.8f;
+    
+    private Animator _animator;
 
     private void Awake()
     {
+        _animator = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
         _currentStamina = _statData.MaxStamina;
     }
@@ -52,12 +55,14 @@ public class PlayerMove : MonoBehaviour
 
     private Vector3 CalculateMovement()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        
+        //_animator.SetLayerWeight(2, PlayerHealth.Health / PlayerHealth.MaxHealth);
+        //_animator.SetFloat("MoveAmount", _moveDirection.magnitude);
         _moveDirection = new Vector3(h, 0, v).normalized;
         _moveDirection = Camera.main.transform.TransformDirection(_moveDirection);
-
+        
         Vector3 moveVector = _moveDirection * (_isSprinting ? 
             _statData.BasicMoveSpeed + _statData.SprintSpeedBonus : _statData.BasicMoveSpeed);
         moveVector.y = _yVelocity;
