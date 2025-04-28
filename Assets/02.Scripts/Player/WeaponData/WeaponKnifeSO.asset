@@ -16,7 +16,8 @@ MonoBehaviour:
   Type: 1
   Damage: 5
   FireCooldown: 0.4
-  Range: 3
+  Range: 2
+  Angle: 90
   MaxBulletCount: 0
   ReloadTime: 0
   BulletKnockbackForce: 0

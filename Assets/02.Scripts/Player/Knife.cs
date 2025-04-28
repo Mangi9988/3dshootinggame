@@ -7,21 +7,16 @@ public class Knife : IWeapon
     private GameObject _owner;
 
     private float _attackCooldownRemaining;
-    private bool _isReloading;
-    private float _reloadTimer;
+    private LayerMask _targetMask;
 
-    private float _attackRange;
-    private float _attackAngle;
-
-    public Knife(PlayerWeaponData data, Transform attackOrigin, GameObject owner)
+    public Knife(PlayerWeaponData data, Transform attackOrigin, GameObject owner, LayerMask targetMask)
     {
         _data = data;
         _attackOrigin = attackOrigin;
         _owner = owner;
+        _targetMask = targetMask;
 
         _attackCooldownRemaining = 0f;
-        _attackRange = _data.Range;
-        _attackAngle = _data.Angle;
     }
 
     public void Update()
@@ -32,17 +27,10 @@ public class Knife : IWeapon
             if (_attackCooldownRemaining < 0f)
                 _attackCooldownRemaining = 0f;
         }
-
-        Reloading();
     }
 
     public void Attack()
     {
-        if (_isReloading)
-        {
-            CancelReload();
-        }
-
         if (_attackCooldownRemaining > 0f)
             return;
 
@@ -51,17 +39,18 @@ public class Knife : IWeapon
 
     private void Fire()
     {
+        Debug.Log("칼");
         _attackCooldownRemaining = _data.FireCooldown;
 
-        Collider[] hitColliders = Physics.OverlapSphere(_attackOrigin.position, _attackRange);
-        foreach (var hitCollider in hitColliders)
+        Collider[] hits = Physics.OverlapSphere(_attackOrigin.position, _data.Range, _targetMask);
+        foreach (var hit in hits)
         {
-            if (hitCollider.TryGetComponent<IDamageable>(out IDamageable damageable))
-            {
-                Vector3 toTarget = (hitCollider.transform.position - _attackOrigin.position).normalized;
-                float angle = Vector3.Angle(_attackOrigin.forward, toTarget);
+            Vector3 toTarget = (hit.transform.position - _attackOrigin.position).normalized;
+            float angle = Vector3.Angle(_attackOrigin.forward, toTarget);
 
-                if (angle <= _attackAngle * 0.5f)
+            if (angle <= _data.Angle / 2f)
+            {
+                if (hit.TryGetComponent<IDamageable>(out IDamageable damageable))
                 {
                     Damage damage = new Damage
                     {
@@ -72,35 +61,6 @@ public class Knife : IWeapon
                     damageable.TakeDamage(damage);
                 }
             }
-        }
-    }
-
-    public void StartReload()
-    {
-        if (_isReloading) return;
-
-        _isReloading = true;
-        _reloadTimer = 0f;
-    }
-
-    private void Reloading()
-    {
-        if (_isReloading)
-        {
-            _reloadTimer += Time.deltaTime;
-            if (_reloadTimer >= _data.ReloadTime)
-            {
-                _isReloading = false;
-            }
-        }
-    }
-
-    public void CancelReload()
-    {
-        if (_isReloading)
-        {
-            _isReloading = false;
-            _reloadTimer = 0f;
         }
     }
 }

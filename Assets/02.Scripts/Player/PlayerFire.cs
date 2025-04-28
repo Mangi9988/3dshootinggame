@@ -8,6 +8,8 @@ public class PlayerFire : MonoBehaviour
 {
     public GameObject FirePosition;
     public PlayerWeaponData GunData;
+    public PlayerWeaponData KnifeData;
+    public LayerMask TargetMask;
     
     [Header("수류탄")]
     public int MaxBombsCount = 3;
@@ -42,11 +44,16 @@ public class PlayerFire : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _bulletText;
     
     private Gun _gun;
+    private Knife _knife;
+    private IWeapon _currentWeapon;
     private Animator _animator;
 
     private void Start()
     {        
         _gun = new Gun(GunData, FirePosition.transform, gameObject);
+        _knife = new Knife(KnifeData, FirePosition.transform, gameObject, TargetMask);
+
+        _currentWeapon = _gun;
         
         _animator = GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -63,22 +70,58 @@ public class PlayerFire : MonoBehaviour
         HandleBombChargeStart();
         HandleBombCharging();
         HandleBombRelease();
-        _gun.Update();
+        
+        HandleWeaponSwitch();
 
-        if (Input.GetMouseButton(0))
+        if (_currentWeapon == _gun)
         {
-            _gun.Attack();
+            _gun.Update();
+        }
+        else if (_currentWeapon == _knife)
+        {
+            _knife.Update();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            _gun.StartReload();
-        }
-
+        HandleAttackInput();
+        HandleReloadInput();
+        
         UpdateBulletUI();
         UpdateReloadUI();
     }
 
+    private void HandleWeaponSwitch()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _currentWeapon = _gun;
+            Debug.Log("원거리 무기 장착 (Gun)");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _currentWeapon = _knife;
+            Debug.Log("근거리 무기 장착 (Sword)");
+        }
+    }
+    
+    private void HandleAttackInput()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            _currentWeapon.Attack();
+        }
+    }
+    
+    private void HandleReloadInput()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (_currentWeapon == _gun)
+            {
+                _gun.StartReload();
+            }
+        }
+    }
+    
     private void HandleBombChargeStart()
     {
         if (Input.GetMouseButtonDown(1))
@@ -231,12 +274,28 @@ public class PlayerFire : MonoBehaviour
     }*/
     
     private void UpdateBulletUI()
-    { 
-        _bulletText.text = $"총알 : {_gun.CurrentBulletCount} / {_gun.MaxBulletCount}";
+    {
+        if (_currentWeapon == _gun)
+        {
+            _bulletText.gameObject.SetActive(true);
+            _bulletText.text = $"총알 : {_gun.CurrentBulletCount} / {_gun.MaxBulletCount}";
+        }
+        else
+        {
+            _bulletText.gameObject.SetActive(false);
+        }
     }
 
     private void UpdateReloadUI()
     {
-        _reloadGaugeBar.fillAmount = _gun.ReloadProgress;
+        if (_currentWeapon == _gun)
+        {
+            _reloadGaugeBar.gameObject.SetActive(true);
+            _reloadGaugeBar.fillAmount = _gun.ReloadProgress;
+        }
+        else
+        {
+            _reloadGaugeBar.gameObject.SetActive(false);
+        }
     }
 }
