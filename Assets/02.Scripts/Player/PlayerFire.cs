@@ -10,6 +10,8 @@ public class PlayerFire : MonoBehaviour
     public PlayerWeaponData GunData;
     public PlayerWeaponData KnifeData;
     public LayerMask TargetMask;
+    public Image UI_SniperZoom;
+    private bool _isZooming;
     
     [Header("수류탄")]
     public int MaxBombsCount = 3;
