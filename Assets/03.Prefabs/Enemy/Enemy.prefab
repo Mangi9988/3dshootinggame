@@ -108,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240d99cbbe78ef440a1ba140250b2c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  Player: {fileID: 0}
+  IsFollowingZombie: 0
   FindDistance: 15
   AttackDistance: 2
   ReturnDistance: 50
@@ -119,7 +120,7 @@ MonoBehaviour:
   MaxHealth: 100
   _currentHealth: 0
   HealthGauge: {fileID: 2247649519752062009}
-  DamagedTime: 0.1
+  DamagedTime: 0.2
   DieTime: 2
   IdleTime: 5
   _patrolPointData: {fileID: 11400000, guid: 0a501cf4caa99154cb46edd41bfa40d9, type: 2}
@@ -648,4 +649,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4762a15305ee634883d35ad587e4661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyEnemy: {fileID: 3557652638548965929}
+  _enemy: {fileID: 0}

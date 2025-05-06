@@ -110,6 +110,11 @@ public class PlayerFire : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             _currentWeapon.Attack();
+            
+            if (_currentWeapon == _gun)
+            {
+                _animator.SetTrigger("Shot");
+            }
         }
     }
     

@@ -59,8 +59,10 @@ public class PlayerMove : MonoBehaviour
         float v = Input.GetAxis("Vertical");
         
         //_animator.SetLayerWeight(2, PlayerHealth.Health / PlayerHealth.MaxHealth);
-        //_animator.SetFloat("MoveAmount", _moveDirection.magnitude);
-        _moveDirection = new Vector3(h, 0, v).normalized;
+        _moveDirection = new Vector3(h, 0, v);
+        _animator.SetFloat("MoveAmount", _moveDirection.magnitude);
+        
+        _moveDirection = _moveDirection.normalized;
         _moveDirection = Camera.main.transform.TransformDirection(_moveDirection);
         
         Vector3 moveVector = _moveDirection * (_isSprinting ? 

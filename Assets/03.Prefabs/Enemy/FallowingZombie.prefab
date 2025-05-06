@@ -351,7 +351,7 @@ MonoBehaviour:
   AttackDistance: 2
   AttackCooltime: 0.7
   AttackDamageValue: 8
-  MoveSpeed: 10
+  MoveSpeed: 0
   MaxHealth: 70
   _currentHealth: 0
   HealthGauge: {fileID: 3650657586440332360}
