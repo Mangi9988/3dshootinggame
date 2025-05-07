@@ -82,6 +82,7 @@ public class Enemy : MonoBehaviour, IDamageable
         _agent.speed = MoveSpeed;
         
         _animator = _animator = GetComponentInChildren<Animator>();
+        _animator.applyRootMotion = false;
         
         PatrolPoints = _patrolPointData.PatrolPositions;
         

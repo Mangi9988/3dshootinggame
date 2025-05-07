@@ -25,17 +25,21 @@ public class PlayerMove : MonoBehaviour
     private const float GRAVITY = -9.8f;
     
     private Animator _animator;
+    private PlayerHealth _playerHealth;
 
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
+        _animator.applyRootMotion = false;
         _characterController = GetComponent<CharacterController>();
+        _playerHealth = GetComponent<PlayerHealth>();
         _currentStamina = _statData.MaxStamina;
     }
     
     private void Update()
     {
         Vector3 moveVector = CalculateMovement();
+        UpdateInjureLayerWeight();
         HandleStamina();
         HandleWallClimb();
         HandleRoll();
@@ -58,7 +62,6 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         
-        //_animator.SetLayerWeight(2, PlayerHealth.Health / PlayerHealth.MaxHealth);
         _moveDirection = new Vector3(h, 0, v);
         _animator.SetFloat("MoveAmount", _moveDirection.magnitude);
         
@@ -70,6 +73,12 @@ public class PlayerMove : MonoBehaviour
         moveVector.y = _yVelocity;
 
         return moveVector;
+    }
+
+    private void UpdateInjureLayerWeight()
+    {
+        float injureWeight = 1f - _playerHealth.GetHealthRatio();
+        _animator.SetLayerWeight(2, injureWeight);
     }
 
     private void HandleStamina()

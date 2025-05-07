@@ -32,7 +32,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }   
         
         _currentHealth -= damage.Value;
-        Debug.Log(_currentHealth);
         if (_currentHealth <= 0)
         { 
             gameObject.SetActive(false);
