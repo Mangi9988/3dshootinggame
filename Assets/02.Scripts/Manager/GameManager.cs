@@ -1,6 +1,15 @@
 using System.Collections;
 using Redcode.Pools;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public enum EGameState
+{
+    Ready,
+    Run,
+    Pause,
+    Over
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -13,9 +22,11 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverScreen;
     private float _waitReadyTime = 3f;
     private float _showGoTime = 1f;
-    private bool _isGameStarted;
+    private bool _isGameStarted = false;
     private bool _isGameOver;
-    
+
+    private EGameState _gameState = EGameState.Run;
+    public EGameState GameState => _gameState;
     public void Awake()
     {
         Instance = this;
@@ -26,18 +37,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameStartRoutine());
         GameOverScreen.SetActive(false);
     }
-
+    
     private IEnumerator GameStartRoutine()
     {
         GameStartScreen.SetActive(true);
         GoText.SetActive(false);
-        Time.timeScale = 0f;
-
+        Time.timeScale = 0;
+        
         yield return StartCoroutine(WaitForRealSeconds(_waitReadyTime));
 
         GameStartScreen.SetActive(false);
         GoText.SetActive(true);
-        Time.timeScale = 1f;
+        Time.timeScale = 1;
         _isGameStarted = true;
         yield return StartCoroutine(WaitForRealSeconds(_showGoTime));
         
@@ -51,6 +62,35 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+    public void Pause()
+    {
+        _gameState = EGameState.Pause;
+        Time.timeScale = 0;
+
+        Cursor.lockState = CursorLockMode.None;
+        
+        PopupManager.Instance.Open(EPopupType.UI_OptionPopup, closeCallback: Continue);
+    }
+    
+    public void Continue()
+    {
+        _gameState = EGameState.Run;
+        Time.timeScale = 1;
+
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    
+    public void Restart()
+    {
+        _gameState = EGameState.Run;
+        Time.timeScale = 1;
+
+        Cursor.lockState = CursorLockMode.Locked;
+
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
     
     public void GameOver()

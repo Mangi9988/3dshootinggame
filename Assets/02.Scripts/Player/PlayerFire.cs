@@ -36,6 +36,10 @@ public class PlayerFire : MonoBehaviour
     private IWeapon _currentWeapon;
     private Animator _animator;
 
+    public GameObject GunObject;
+    public GameObject BatObject;
+    public GameObject BombObject;
+    
     private void Start()
     {        
         _gun = new Gun(GunData, FirePosition.transform, gameObject);
@@ -75,18 +79,27 @@ public class PlayerFire : MonoBehaviour
         {
             _currentWeapon = _gun;
             ExitZoom();
+            GunObject.SetActive(true);
+            BatObject.SetActive(false);
+            BombObject.SetActive(false);
             Debug.Log("원거리 무기 장착 (Gun)");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             _currentWeapon = _knife;
             ExitZoom();
+            GunObject.SetActive(false);
+            BatObject.SetActive(true);
+            BombObject.SetActive(false);
             Debug.Log("근거리 무기 장착 (Sword)");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             _currentWeapon = _bombThrow;
             ExitZoom();
+            GunObject.SetActive(false);
+            BatObject.SetActive(false);
+            BombObject.SetActive(true);
             Debug.Log("수류탄 장착");
         }
     }
