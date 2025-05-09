@@ -5,7 +5,6 @@ using UnityEngine.AI;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("스폰")] 
-    [SerializeField] private bool _spawning;
     [SerializeField] private int spawnCount;
     [SerializeField] private float spawnRange = 5f; // 중심 기준 랜덤 거리
     [SerializeField] private float delayBetweenSpawns = 5f;
@@ -14,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
     
     private void Update()
     {
-        if (_spawning == false && _spawnCoroutine == null)
+        if (_spawnCoroutine == null)
         {
             _spawnCoroutine = StartCoroutine(Spawn_Coroutine());
         }
@@ -39,7 +38,6 @@ public class EnemySpawner : MonoBehaviour
                     FollowingZombie followingZombie = GameManager.Instance.PoolManager.GetFromPool<FollowingZombie>();
                     followingZombie.transform.position = position;
                 }
-                _spawning = false;
             }
         } 
         yield return new WaitForSeconds(delayBetweenSpawns);

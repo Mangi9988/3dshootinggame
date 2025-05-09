@@ -38,7 +38,7 @@ public class PlayerFire : MonoBehaviour
 
     public GameObject GunObject;
     public GameObject BatObject;
-    public GameObject BombObject;
+    //public GameObject BombObject;
     
     private void Start()
     {        
@@ -64,7 +64,7 @@ public class PlayerFire : MonoBehaviour
         _currentWeapon.Update();
 
         HandleAttackInput();
-        HandleChargeRelease();
+        HandleChargeThrow();
         HandleReloadInput();
         HandleZoomToggle();
         
@@ -81,7 +81,9 @@ public class PlayerFire : MonoBehaviour
             ExitZoom();
             GunObject.SetActive(true);
             BatObject.SetActive(false);
-            BombObject.SetActive(false);
+            //BombObject.SetActive(false);
+            _animator.SetLayerWeight(3, 0f);
+            _animator.SetLayerWeight(5, 0f);
             Debug.Log("원거리 무기 장착 (Gun)");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -90,7 +92,9 @@ public class PlayerFire : MonoBehaviour
             ExitZoom();
             GunObject.SetActive(false);
             BatObject.SetActive(true);
-            BombObject.SetActive(false);
+            //BombObject.SetActive(false);
+            _animator.SetLayerWeight(3, 1f);
+            _animator.SetLayerWeight(5, 0f);
             Debug.Log("근거리 무기 장착 (Sword)");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -99,20 +103,26 @@ public class PlayerFire : MonoBehaviour
             ExitZoom();
             GunObject.SetActive(false);
             BatObject.SetActive(false);
-            BombObject.SetActive(true);
+            //BombObject.SetActive(true);
+            _animator.SetLayerWeight(3, 0f);
+            _animator.SetLayerWeight(5, 1f);
             Debug.Log("수류탄 장착");
         }
     }
     
     private void HandleAttackInput()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && _currentWeapon.IsAttackAvailable)
         {
             _currentWeapon.Attack();
             
             if (_currentWeapon == _gun)
             {
                 _animator.SetTrigger("Shot");
+            }
+            else if (_currentWeapon == _knife)
+            {
+                _animator.SetTrigger("MeleeAttack");
             }
         }
     }
@@ -150,10 +160,11 @@ public class PlayerFire : MonoBehaviour
         }
     }
 
-    private void HandleChargeRelease()
+    private void HandleChargeThrow()
     {
         if (_currentWeapon == _bombThrow && Input.GetMouseButtonUp(0))
         {
+            _animator.SetTrigger("Throw");
             (_currentWeapon as IThrowableWeapon)?.Throw();
             UpdateBulletUI();
         }

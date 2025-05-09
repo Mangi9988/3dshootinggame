@@ -15,7 +15,7 @@ MonoBehaviour:
   WeaponName: Knife
   Type: 1
   Damage: 5
-  FireCooldown: 0.4
+  FireCooldown: 2
   Range: 2
   Angle: 90
   MaxBulletCount: 0

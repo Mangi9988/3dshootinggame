@@ -3,16 +3,17 @@ using UnityEngine;
 public class Knife : IWeapon
 {
     private PlayerWeaponData _data;
-    private Transform _attackOrigin;
+    private Transform _attackTransform;
     private GameObject _owner;
 
     private float _attackCooldownRemaining;
     private LayerMask _targetMask;
-
-    public Knife(PlayerWeaponData data, Transform attackOrigin, GameObject owner, LayerMask targetMask)
+    public bool IsAttackAvailable => _attackCooldownRemaining <= 0f;
+    
+    public Knife(PlayerWeaponData data, Transform attackTransform, GameObject owner, LayerMask targetMask)
     {
         _data = data;
-        _attackOrigin = attackOrigin;
+        _attackTransform = attackTransform;
         _owner = owner;
         _targetMask = targetMask;
 
@@ -25,15 +26,19 @@ public class Knife : IWeapon
         {
             _attackCooldownRemaining -= Time.deltaTime;
             if (_attackCooldownRemaining < 0f)
-                _attackCooldownRemaining = 0f;
+            {
+                _attackCooldownRemaining = 0f;   
+            }
         }
     }
 
     public void Attack()
     {
         if (_attackCooldownRemaining > 0f)
+        {
             return;
-
+        }
+        
         Fire();
     }
 
@@ -42,11 +47,11 @@ public class Knife : IWeapon
         Debug.Log("칼");
         _attackCooldownRemaining = _data.FireCooldown;
 
-        Collider[] hits = Physics.OverlapSphere(_attackOrigin.position, _data.Range, _targetMask);
+        Collider[] hits = Physics.OverlapSphere(_attackTransform.position, _data.Range, _targetMask);
         foreach (var hit in hits)
         {
-            Vector3 toTarget = (hit.transform.position - _attackOrigin.position).normalized;
-            float angle = Vector3.Angle(_attackOrigin.forward, toTarget);
+            Vector3 toTarget = (hit.transform.position - _attackTransform.position).normalized;
+            float angle = Vector3.Angle(_attackTransform.forward, toTarget);
 
             if (angle <= _data.Angle / 2f)
             {

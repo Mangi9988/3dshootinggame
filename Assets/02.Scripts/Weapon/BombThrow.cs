@@ -14,6 +14,8 @@ public class BombThrow : IThrowableWeapon
 
     private bool _isCharging;
     
+    public bool IsAttackAvailable => _haveBombsCount > 0 && !_isCharging;
+    
     public float ChargeProgress => _isCharging ? (_chargeTimer / _maxChargeTime) : 0f;
     
     public Transform FirePosition;

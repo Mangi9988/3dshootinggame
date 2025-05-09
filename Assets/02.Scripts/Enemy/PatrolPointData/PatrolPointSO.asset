@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: PatrolPointSO
   m_EditorClassIdentifier: 
   PatrolPositions:
-  - {x: 40, y: 0, z: 40}
-  - {x: 40, y: 0, z: -40}
-  - {x: -40, y: 0, z: -40}
-  - {x: -40, y: 0, z: 40}
-  - {x: 25, y: 3.5, z: 0}
-  - {x: -25, y: 0, z: 0}
-  - {x: 0, y: 0, z: 25}
-  - {x: 0, y: 0, z: -25}
+  - {x: -120, y: 0, z: 100}
+  - {x: 120, y: 0, z: -100}
+  - {x: -120, y: 0, z: 100}
+  - {x: 120, y: 0, z: 100}
+  - {x: -60, y: 0, z: 0}
+  - {x: 60, y: 0, z: 0}
+  - {x: 0, y: 0, z: 60}
+  - {x: 0, y: 0, z: -60}

@@ -15,6 +15,7 @@ public class Gun : IWeapon
     public int MaxBulletCount => _data.MaxBulletCount;
     public bool IsReloading => _isReloading;
     public float ReloadProgress => _isReloading ? _reloadTimer / _data.ReloadTime : 0f;
+    public bool IsAttackAvailable => !_isReloading && _fireCooldown <= 0f && _currentBulletCount > 0;
     
     public Gun(PlayerWeaponData data, Transform firePosition, GameObject owner)
     {

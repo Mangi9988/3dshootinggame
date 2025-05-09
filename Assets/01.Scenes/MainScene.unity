@@ -4506,7 +4506,7 @@ Transform:
   m_GameObject: {fileID: 155248546}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.9, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4526,8 +4526,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawning: 0
   spawnCount: 3
-  spawnRange: 50
-  delayBetweenSpawns: 15
+  spawnRange: 100
+  delayBetweenSpawns: 10
   _maxSpawnTry: 10
 --- !u!1001 &156297172
 PrefabInstance:
@@ -10120,6 +10120,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 0d82ae0493e1c264bad0588fde0a3d8a, type: 3}
+--- !u!1 &276501540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1063816135455577480, guid: 6423a9106e633b449a5ed0688557f3a4, type: 3}
+  m_PrefabInstance: {fileID: 1418833349}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &276977312
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26090,6 +26095,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 52c469844ed802a45975e920d82002c9, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 0e55d5c42cc96404f872b45455603f8b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6016349230849131448, guid: 0e55d5c42cc96404f872b45455603f8b, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -40424,6 +40433,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 47c1421697edd00439084088bf4efb68, type: 3}
+--- !u!1 &1063288577 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8346473667392241105, guid: 222902f0ac7823c43bf673fdb207e370, type: 3}
+  m_PrefabInstance: {fileID: 2105225792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1067271876
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49621,9 +49635,8 @@ MonoBehaviour:
   _reloadGaugeBar: {fileID: 549714162}
   _bulletText: {fileID: 399727175}
   _chargeGaugeBar: {fileID: 1401162705}
-  GunObject: {fileID: 0}
-  BatObject: {fileID: 0}
-  BombObject: {fileID: 0}
+  GunObject: {fileID: 276501540}
+  BatObject: {fileID: 1063288577}
 --- !u!114 &1274883949
 MonoBehaviour:
   m_ObjectHideFlags: 0
